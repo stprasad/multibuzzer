@@ -146,19 +146,21 @@ export default function Table(game) {
           {!game.isConnected ? (
             <p className="warning">Disconnected - attempting to reconnect...</p>
           ) : null}
-          <div id="buzzer">
-            <button
-              ref={buzzButton}
-              disabled={buzzed || game.G.locked}
-              onClick={() => {
-                if (!buzzed && !game.G.locked) {
-                  attemptBuzz();
-                }
-              }}
-            >
-              {game.G.locked ? 'Locked' : buzzed ? 'Buzzed' : 'Buzz'}
-            </button>
-          </div>
+          {!isHost && (
+            <div id="buzzer">
+              <button
+                ref={buzzButton}
+                disabled={buzzed || game.G.locked}
+                onClick={() => {
+                  if (!buzzed && !game.G.locked) {
+                    attemptBuzz();
+                  }
+                }}
+              >
+                {game.G.locked ? 'Locked' : buzzed ? 'Buzzed' : 'Buzz'}
+              </button>
+            </div>
+          )}
           {isHost ? (
             <div className="settings">
               <div className="button-container">

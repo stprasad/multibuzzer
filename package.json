@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node -r esm src/server.js",
-    "dev": "concurrently \"PORT=4000 yarn client\" \"PORT=4001 yarn start\"",
+    "dev": "concurrently \"PORT=4000 npm run client\" \"PORT=4001 npm run start\"",
     "client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -30,6 +30,7 @@
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.13.1",
     "react-icons": "^3.9.0",
+    "react-qrcode-logo": "^2.9.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "uuid": "^7.0.3"

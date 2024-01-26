@@ -85,10 +85,14 @@ export default function Table(game) {
     return () => window.removeEventListener('keydown', onKeydown);
   }, []);
 
+  let currentPlayerName;
   const players = !game.gameMetadata
     ? []
     : game.gameMetadata
-        .filter((p) => p.name)
+        .filter((p) => {
+          if(p.id === +game.playerID) currentPlayerName = p.name;
+          return p.name
+        })
         .map((p) => ({ ...p, id: String(p.id) }));
   // host is lowest active user
   const firstPlayer =
@@ -114,7 +118,7 @@ export default function Table(game) {
     .filter((p) => p.name);
   // active players who haven't buzzed
   const activePlayers = orderBy(
-    players.filter((p) => !some(queue, (q) => q.id === p.id)),
+    players.filter((p) => p.id !== '0' && !some(queue, (q) => q.id === p.id)),
     ['connected', 'name'],
     ['desc', 'asc']
   );
@@ -141,8 +145,9 @@ export default function Table(game) {
         setSound={() => setSound(!sound)}
       />
       <Container>
-        <section>
-          <p id="room-title">Room {game.gameID}</p>
+        <section className="room-header">
+          <p className="room-title">{isHost ? 'Host' : 'Player'}: {currentPlayerName}</p>
+          <p className="room-title">Room: {game.gameID}</p>
           {!game.isConnected ? (
             <p className="warning">Disconnected - attempting to reconnect...</p>
           ) : null}
@@ -179,10 +184,10 @@ export default function Table(game) {
                   Reset all buzzers
                 </button>
               </div>
-              <div className="divider" />
             </div>
           ) : null}
         </section>
+        <div className="divider" />
         <div className="queue">
           <p>Players Buzzed</p>
           <ul>

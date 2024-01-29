@@ -10,6 +10,7 @@ import { get, isNil } from 'lodash';
 import Lobby from './containers/Lobby';
 import Game from './containers/Game';
 import './App.css';
+import QrCode from './containers/QrCode';
 
 function App() {
   const [auth, setAuth] = useState({
@@ -23,7 +24,7 @@ function App() {
       <Router>
         <Switch>
           <Route
-            path="/:id"
+            path="/game/:id"
             render={({ location, match }) => {
               const roomID = get(match, 'params.id');
               // redirect if the roomID in auth doesn't match, or no credentials
@@ -42,6 +43,9 @@ function App() {
               );
             }}
           />
+          <Route path="/qrcode/:id">
+            <QrCode />
+          </Route>
           <Route path="/">
             <Lobby setAuth={setAuth} />
           </Route>

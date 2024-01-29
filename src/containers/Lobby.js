@@ -74,7 +74,7 @@ export default function Lobby({ setAuth }) {
       // save auth and go to room
       setAuth(auth);
       setLoading(false);
-      history.push(`/${room.roomID}`);
+      history.push(`/game/${room.roomID}`);
     } catch (error) {
       setLoading(false);
       setError(ERROR_MESSAGE[error.message]);
@@ -90,6 +90,7 @@ export default function Lobby({ setAuth }) {
         throw new Error(ERROR_TYPE.hostRoom);
       }
       const roomID = createRes.data.gameID;
+      window.open(`/qrcode/${roomID}`, '_blank');
       await enterRoom(roomID, true);
     } catch (error) {
       setLoading(false);
